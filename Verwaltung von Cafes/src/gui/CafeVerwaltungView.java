@@ -1,14 +1,7 @@
 package gui;
    
-
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-
 import business.CafeVerwaltung;
 import business.CafeVerwaltungModel;
-import javafx.event.*;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
@@ -25,16 +18,19 @@ public class CafeVerwaltungView {
     private Pane pane     					= new  Pane();
     private Label lblEingabe    	 		= new Label("Eingabe");
     private Label lblAnzeige   	 	    	= new Label("Anzeige");
+    
     private Label lblName 					= new Label("Name:");
-    private Label lblGeoeffnetVon   		= new Label("Ort");
-    private Label lblGeoeffnetBis  	 		= new Label("Beschreibung");
-    private Label lblStrasseHNr   			= new Label("Angeschlossener Cafe ? ");
-    private Label lblDienstleistungen  		= new Label("Kafee Produkte");
+    private Label lblOrt  					= new Label("Ort");
+    private Label lblBeschreibung  	 		= new Label("Beschreibung");
+    private Label lblAngeschlossenerCafe	= new Label("Angeschlossener Cafe ? ");
+    private Label lblKafeeProdukte  		= new Label("Kaffee Produkte");
+    
     private TextField txtName 	 			= new TextField();
-    private TextField txtGeoeffnetVon		= new TextField();
-    private TextField txtGeoeffnetBis		= new TextField();
-    private TextField txtStrasseHNr			= new TextField();
-    private TextField txtDienstleistungen	= new TextField();
+    private TextField txtOrt				= new TextField();
+    private TextField txtBeschreibung		= new TextField();
+    private TextField txtAngeschlossenerCafe	= new TextField();
+    private TextField txtKafeeProdukte		= new TextField();
+    
     private TextArea txtAnzeige  			= new TextArea();
     private Button btnEingabe 		 		= new Button("Eingabe");
     private Button btnAnzeige 		 		= new Button("Anzeige");
@@ -64,37 +60,37 @@ public class CafeVerwaltungView {
        	lblAnzeige.setStyle("-fx-font-weight: bold;"); 
        	lblName.setLayoutX(20);
     	lblName.setLayoutY(90);
-    	lblGeoeffnetVon.setLayoutX(20);
-    	lblGeoeffnetVon.setLayoutY(130);
-    	lblGeoeffnetBis.setLayoutX(20);
-    	lblGeoeffnetBis.setLayoutY(170);
-    	lblStrasseHNr.setLayoutX(20);
-    	lblStrasseHNr.setLayoutY(210);
-    	lblDienstleistungen.setLayoutX(20);
-    	lblDienstleistungen.setLayoutY(250);    	
+    	lblOrt.setLayoutX(20);
+    	lblOrt.setLayoutY(130);
+    	lblBeschreibung.setLayoutX(20);
+    	lblBeschreibung.setLayoutY(170);
+    	lblAngeschlossenerCafe.setLayoutX(20);
+    	lblAngeschlossenerCafe.setLayoutY(210);
+    	lblKafeeProdukte.setLayoutX(20);
+    	lblKafeeProdukte.setLayoutY(250);    	
        	pane.getChildren().addAll(lblEingabe, lblAnzeige, 
-       		lblName, lblGeoeffnetVon, lblGeoeffnetBis,
-       		lblStrasseHNr, lblDienstleistungen);
+       		lblName, lblOrt, lblBeschreibung,
+       		lblAngeschlossenerCafe, lblKafeeProdukte);
     
     	// Textfelder
      	txtName.setLayoutX(170);
     	txtName.setLayoutY(90);
     	txtName.setPrefWidth(200);
-    	txtGeoeffnetVon.setLayoutX(170);
-    	txtGeoeffnetVon.setLayoutY(130);
-    	txtGeoeffnetVon.setPrefWidth(200);
-    	txtGeoeffnetBis.setLayoutX(170);
-    	txtGeoeffnetBis.setLayoutY(170);
-    	txtGeoeffnetBis.setPrefWidth(200);
-      	txtStrasseHNr.setLayoutX(170);
-    	txtStrasseHNr.setLayoutY(210);
-    	txtStrasseHNr.setPrefWidth(200);
-    	txtDienstleistungen.setLayoutX(170);
-    	txtDienstleistungen.setLayoutY(250);
-    	txtDienstleistungen.setPrefWidth(200);
+    	txtOrt.setLayoutX(170);
+    	txtOrt.setLayoutY(130);
+    	txtOrt.setPrefWidth(200);
+    	txtBeschreibung.setLayoutX(170);
+    	txtBeschreibung.setLayoutY(170);
+    	txtBeschreibung.setPrefWidth(200);
+      	txtAngeschlossenerCafe.setLayoutX(170);
+    	txtAngeschlossenerCafe.setLayoutY(210);
+    	txtAngeschlossenerCafe.setPrefWidth(200);
+    	txtKafeeProdukte.setLayoutX(170);
+    	txtKafeeProdukte.setLayoutY(250);
+    	txtKafeeProdukte.setPrefWidth(200);
       	pane.getChildren().addAll( 
-     		txtName, txtGeoeffnetVon, txtGeoeffnetBis,
-     		txtStrasseHNr, txtDienstleistungen);
+     		txtName, txtOrt, txtBeschreibung,
+     		txtAngeschlossenerCafe, txtKafeeProdukte);
      	
         // Textbereich	
         txtAnzeige.setEditable(false);
@@ -121,72 +117,125 @@ public class CafeVerwaltungView {
    }
    
    private void initListener() {
-	    btnEingabe.setOnAction(new EventHandler<ActionEvent>() {
+	   // Alte funktionierende Version mittels EventHandler
+	   /*
+	    * btnEingabe.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-        	    nehmeBuergeramtAuf();
+            	nehmeCafeVerwaltungAuf();
             }
 	    });
+	   
 	    btnAnzeige.setOnAction(new EventHandler<ActionEvent>() {
 	    	@Override
 	        public void handle(ActionEvent e) {
-	            zeigeBuergeraemterAn();
+	    		zeigeCafeVerwaltungAn();
 	        } 
    	    });
+	    
 	    mnItmCsvImport.setOnAction(new EventHandler<ActionEvent>() {
 	    	@Override
 	        public void handle(ActionEvent e) {
-	       	 	//leseAusDatei("csv");
+	    		cafeVerwaltungControl.leseCafeVerwaltungAusDatei("csv");
 	    	}
 	    });
+	    
 	    mnItmTxtImport.setOnAction(new EventHandler<ActionEvent>() {
 		    @Override
 		    public void handle(ActionEvent e) {
-		     	//leseAusDatei("txt");
+		    	cafeVerwaltungControl.leseCafeVerwaltungAusDatei("txt");
 		    }
     	});
+	    
 	    mnItmCsvExport.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-				cafeVerwaltungControl.schreibeCafeVerwaltungInCsvDatei();
+				cafeVerwaltungControl.schreibeCafeVerwaltungInDatei();
 			}	
 	    });
+	    */
+	   
+	   // neue funktionierende Funktionen mittel Lambda-Ausdruck 
+	   btnEingabe.setOnAction(ae->{
+		   nehmeCafeVerwaltungAuf();
+		   });
+	   
+	   btnAnzeige.setOnAction(ae->{
+		   zeigeCafeVerwaltungAn();
+		   });
+	   
+	   mnItmCsvImport.setOnAction(ae->{
+		   cafeVerwaltungControl.leseCafeVerwaltungAusDatei("csv");
+		   });
+	   
+	   mnItmTxtImport.setOnAction(ae->{
+		   cafeVerwaltungControl.leseCafeVerwaltungAusDatei("txt");
+	   });
+	   
+	   mnItmCsvExport.setOnAction(ae->{
+		   cafeVerwaltungControl.schreibeCafeVerwaltungInDatei();
+	   });
     }
+   
+
     
-    private void nehmeBuergeramtAuf(){
+    private void nehmeCafeVerwaltungAuf(){
     	try{
-    		//this.cafeVerwaltung = new CafeVerwaltung(
-    			//cafeVerwaltung.getName(),
-   	            //Float.parseFloat(cafeVerwaltung.getOrt(),
-   	            //Float.parseFloat(cafeVerwaltung.getBeschreibung(),
-   	            //cafeVerwaltung.getKaffeeProdukte(),
-   	           // cafeVerwaltung.isAngeschlossenerBäckerei(),
-   	            zeigeInformationsfensterAn("Die Produkte wurde aufgenommen!");
+    		// AngeschlossenerCafe eingabe mit ja oder nein eingrenzt, ob gross oder klein geschrieben ist egal
+    		boolean angeschlossen = false;
+    		if(txtAngeschlossenerCafe.getText().toLowerCase().equals("ja")) {
+    			angeschlossen = true;
+			} else if(txtAngeschlossenerCafe.getText().toLowerCase().equals("nein")) {
+				angeschlossen = false;
+			} else {
+				// Meldung anzeigen lassen und dabei den nachsten Vorgang abbrechnen.
+				zeigeFehlermeldungsfensterAn("Bitte nur Ja oder Nein bei Angeschlossen");
+				return;
+			}
+    		// String name, String ort, String beschreibung, String[] kaffeeProdukte, boolean angeschlossenerBaeckerei
+    		 this.cafeVerwaltung = new CafeVerwaltung(
+    				 txtName.getText(),
+    				 txtOrt.getText(),
+    				 txtBeschreibung.getText(),
+    				 txtKafeeProdukte.getText().split(";"),
+    				 angeschlossen
+   	            );
+    		  cafeVerwaltungModel.setCafeVerwaltung(cafeVerwaltung);
+    		 zeigeInformationsfensterAn("Die Produkte wurde aufgenommen!");
+    		 
        	}
        	catch(Exception exc){
        		zeigeFehlermeldungsfensterAn(exc.getMessage());
      	}
     }
    
-    private void zeigeBuergeraemterAn(){
-    	if(this.cafeVerwaltung != null){
-    		txtAnzeige.setText(
-    			this.cafeVerwaltung.gibCafeVerwaltungZuruck(' '));
-    	}
-    	else{
-    		zeigeInformationsfensterAn("Bisher wurde keine KaffeeProdukte aufgenommen");
-    	}
-    }    
+    private void zeigeCafeVerwaltungAn() {
+        // Ãœber das Modell auf cafeVerwaltung zugreifen
+        CafeVerwaltung aktuelleVerwaltung = this.cafeVerwaltungModel.getCafeVerwaltung();
+
+        if (aktuelleVerwaltung != null) {
+            // Debug: Ausgabe der Daten
+           
+
+            // Anzeige aktualisieren
+            txtAnzeige.setText(aktuelleVerwaltung.gibCafeVerwaltungZuruck(' '));
+        } else {
+            // Fehlermeldung, wenn kein Objekt existiert
+          
+            zeigeInformationsfensterAn("Bisher wurde keine CafeVerwaltung aufgenommen.");
+        }
+    }
+
+
 		  
-    
-		
+   
 
     public void zeigeInformationsfensterAn(String meldung){
     	new MeldungsfensterAnzeiger(AlertType.INFORMATION,
     		"Information", meldung).zeigeMeldungsfensterAn();
     }	
     
-    void zeigeFehlermeldungsfensterAn(String meldung){
+    public void zeigeFehlermeldungsfensterAn(String meldung){
        	new MeldungsfensterAnzeiger(AlertType.ERROR,
         	"Fehler", meldung).zeigeMeldungsfensterAn();
     }

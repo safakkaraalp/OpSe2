@@ -1,5 +1,6 @@
 package business;
 
+
 public class CafeVerwaltung {
 	
 	// Name des Cafes
@@ -14,16 +15,15 @@ public class CafeVerwaltung {
     // Verschiedene KaffeeProdukte
     private String[] kaffeeProdukte;
     
-    //boolean Variable für Bäckerei, ob angeschlossen ist
-    private boolean angeschlossenerBäckerei;
+    //boolean Variable fï¿½r Bï¿½ckerei, ob angeschlossen ist
+    private boolean angeschlossenerBaeckerei;
 
-    public CafeVerwaltung(String name, String ort, String beschreibung,
-     String[] kaffeeProdukte, boolean angeschlossenerBäckerei){
+    public CafeVerwaltung(String name, String ort, String beschreibung, String[] kaffeeProdukte, boolean angeschlossenerBaeckerei){
    		this.name = name;
   	    this.ort = ort;
    	    this.beschreibung = beschreibung;
    	    this.setKaffeeProdukte(kaffeeProdukte);
-   	    this.setAngeschlossenerBäckerei(angeschlossenerBäckerei);
+   	    this.setAngeschlossenerBaeckerei(angeschlossenerBaeckerei);
     }
     
 	public String getName() {
@@ -38,7 +38,7 @@ public class CafeVerwaltung {
 		return ort;
 	}
 
-	public void sertOrt(String ort) {
+	public void setOrt(String ort) {
 		this.ort = ort;
 	}
 
@@ -46,9 +46,6 @@ public class CafeVerwaltung {
 		return beschreibung;
 	}
 
-	
-
-	
 	public String[] getKaffeeProdukte() {
 		return kaffeeProdukte;
 	}
@@ -59,12 +56,12 @@ public class CafeVerwaltung {
 
 	
 	
-	public boolean isAngeschlossenerBäckerei() {
-		return angeschlossenerBäckerei;
+	public boolean isAngeschlossenerBaeckerei() {
+		return angeschlossenerBaeckerei;
 	}
 
-	public void setAngeschlossenerBäckerei(boolean angeschlossenerBäckerei) {
-		this.angeschlossenerBäckerei = angeschlossenerBäckerei;
+	public void setAngeschlossenerBaeckerei(boolean angeschlossenerBaeckerei) {
+		this.angeschlossenerBaeckerei = angeschlossenerBaeckerei;
 	}
 
 	public String getKaffeeProdukteAlsString(char trenner) {
@@ -77,12 +74,18 @@ public class CafeVerwaltung {
 	}
 	
 	public String gibCafeVerwaltungZuruck(char trenner){
+			String angeschlossen = "";
+			if(this.isAngeschlossenerBaeckerei() == true){
+				angeschlossen = "ja";
+			} else{
+				angeschlossen = "nein";
+			}
+		
   		    return this.getName() + trenner 
   			+ this.getOrt() + trenner
   		    + this.getBeschreibung() + trenner
-  		    + this.isAngeschlossenerBäckerei() +  "\n"
-  		    + this.getKaffeeProdukte() + trenner + "\n";
+  		    + angeschlossen + trenner
+  		    + this.getKaffeeProdukteAlsString(trenner)  ;
   		    
   	}
 }
-
