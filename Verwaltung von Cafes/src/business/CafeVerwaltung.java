@@ -16,9 +16,9 @@ public class CafeVerwaltung {
     private String[] kaffeeProdukte;
     
     //boolean Variable f�r B�ckerei, ob angeschlossen ist
-    private boolean angeschlossenerBaeckerei;
+    private String angeschlossenerBaeckerei;
 
-    public CafeVerwaltung(String name, String ort, String beschreibung, String[] kaffeeProdukte, boolean angeschlossenerBaeckerei){
+    public CafeVerwaltung(String name, String ort, String beschreibung, String[] kaffeeProdukte, String angeschlossenerBaeckerei){
    		this.name = name;
   	    this.ort = ort;
    	    this.beschreibung = beschreibung;
@@ -56,11 +56,11 @@ public class CafeVerwaltung {
 
 	
 	
-	public boolean isAngeschlossenerBaeckerei() {
+	public String isAngeschlossenerBaeckerei() {
 		return angeschlossenerBaeckerei;
 	}
 
-	public void setAngeschlossenerBaeckerei(boolean angeschlossenerBaeckerei) {
+	public void setAngeschlossenerBaeckerei(String angeschlossenerBaeckerei) {
 		this.angeschlossenerBaeckerei = angeschlossenerBaeckerei;
 	}
 
@@ -75,11 +75,9 @@ public class CafeVerwaltung {
 	
 	public String gibCafeVerwaltungZuruck(char trenner){
 			String angeschlossen = "";
-			if(this.isAngeschlossenerBaeckerei() == true){
+			
 				angeschlossen = "ja";
-			} else{
-				angeschlossen = "nein";
-			}
+			
 		
   		    return this.getName() + trenner 
   			+ this.getOrt() + trenner
