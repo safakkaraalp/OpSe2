@@ -2,9 +2,12 @@ package fabrikmethode;
 
 public class ConcreteTxtCreator extends Creator{
 
-public Product factoryMethod() {
+	@Override
+	public Product factoryMethod(){
 		
 		return new ConcreteTxtProduct();
 	}
-	
+
+
 }
+

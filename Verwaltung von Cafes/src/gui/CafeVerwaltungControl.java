@@ -23,7 +23,8 @@ public class CafeVerwaltungControl {
 		        	this.cafeVerwaltungModel.leseAusDatei(typ);
 		            cafeVerwaltungView.zeigeInformationsfensterAn("Die Kaffee-Produkte wurden erfolgreich geladen!");
 	        	} else if("txt".equals(typ)){
-	        		cafeVerwaltungView.zeigeInformationsfensterAn("Txt noch nicht implementiert");
+	        		this.cafeVerwaltungModel.leseAusDatei(typ);
+	        		cafeVerwaltungView.zeigeInformationsfensterAn("Die Kaffee-Produkte wurden von TXT geladen!");
 	        	} else {
 	        		cafeVerwaltungView.zeigeFehlermeldungsfensterAn("Fehler bei der ausfuehrung");
 	        	}

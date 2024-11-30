@@ -181,24 +181,13 @@ public class CafeVerwaltungView {
     
     private void nehmeCafeVerwaltungAuf(){
     	try{
-    		// AngeschlossenerCafe eingabe mit ja oder nein eingrenzt, ob gross oder klein geschrieben ist egal
-    		boolean angeschlossen = false;
-    		if(txtAngeschlossenerCafe.getText().toLowerCase().equals("ja")) {
-    			angeschlossen = true;
-			} else if(txtAngeschlossenerCafe.getText().toLowerCase().equals("nein")) {
-				angeschlossen = false;
-			} else {
-				// Meldung anzeigen lassen und dabei den nachsten Vorgang abbrechnen.
-				zeigeFehlermeldungsfensterAn("Bitte nur Ja oder Nein bei Angeschlossen");
-				return;
-			}
-    		// String name, String ort, String beschreibung, String[] kaffeeProdukte, boolean angeschlossenerBaeckerei
+    		// String name, String ort, String beschreibung, String[] kaffeeProdukte, String angeschlossenerBaeckerei
     		 this.cafeVerwaltung = new CafeVerwaltung(
     				 txtName.getText(),
     				 txtOrt.getText(),
     				 txtBeschreibung.getText(),
     				 txtKafeeProdukte.getText().split(";"),
-    				 angeschlossen
+    				 txtAngeschlossenerCafe.getText()
    	            );
     		  cafeVerwaltungModel.setCafeVerwaltung(cafeVerwaltung);
     		 zeigeInformationsfensterAn("Die Produkte wurde aufgenommen!");

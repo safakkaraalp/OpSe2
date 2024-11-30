@@ -1,36 +1,45 @@
 package business;
 
-import java.io.BufferedReader;
-import fabrikmethode .*;
-import fabrikmethode.ConcreteCSVCreator;
-import fabrikmethode.ConcreteTxtCreator;
 import java.io.BufferedWriter;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import fabrikmethode.ConcreteCSVCreator;
+import fabrikmethode.ConcreteTxtCreator;
+import fabrikmethode.Creator;
+import fabrikmethode.Product;
 import gui.CafeVerwaltungView;
 
 public class CafeVerwaltungModel {
 	public CafeVerwaltung cafeVerwaltung;
 	public CafeVerwaltungView cafeVerwaltungView;
-	
 
-	public void schreibeCafeVerwaltungInCsvDatei() throws IOException {
-		Creator writeCreator = new ConcreteCSVCreator();
-		Product writer = writeCreator.factoryMethod();
-		writer.leseAusDatei();
-		writer.schliessDatei();
-		
+	public void schreibeCafeVerwaltungInCsvDatei() throws Exception {
+		try {
+			BufferedWriter aus = new BufferedWriter(new FileWriter("CafeVerwaltungAusgabe.csv", true));
+			aus.write(getCafeVerwaltung().gibCafeVerwaltungZuruck(';'));
+			aus.close();
+		} catch (IOException exc) {
+			throw new IOException("Fehler beim Speichern der Datei!");
+		} catch (Exception exc) {
+			throw new Exception(exc);
+		}
+
 	}
-	
-	
-	public void schreibeCafeVerwaltungInTxtDatei() throws IOException {
+
+	public void leseAusDatei(String typ) throws IOException {
 		Creator writeCreator = new ConcreteTxtCreator();
+		if (typ.equals("txt")) {
+			writeCreator = new ConcreteTxtCreator();
+		} else {
+			writeCreator = new ConcreteCSVCreator();
+		}
 		Product writer = writeCreator.factoryMethod();
-		writer.leseAusDatei();
+		String[] zeile = writer.leseAusDatei();
 		writer.schliessDatei();
+
+		this.cafeVerwaltung = new CafeVerwaltung(zeile[0], zeile[1], zeile[2], zeile[3].split("_"), zeile[4]);
+
 	}
 
 	public CafeVerwaltung getCafeVerwaltung() {
@@ -39,22 +48,6 @@ public class CafeVerwaltungModel {
 
 	public void setCafeVerwaltung(CafeVerwaltung cafeVerwaltung) {
 		this.cafeVerwaltung = cafeVerwaltung;
-	}
-
-	public void leseAusDatei(String typ) throws IOException {
-		
-		
-			String[] kaffeeProdukte = 
-
-			
-			this.cafeVerwaltung = new CafeVerwaltung(zeile[0], 
-					zeile[1], 
-					zeile[2], 
-					kaffeeProdukte, 
-					angeschlossen 
-			);
-
-		
 	}
 
 }
