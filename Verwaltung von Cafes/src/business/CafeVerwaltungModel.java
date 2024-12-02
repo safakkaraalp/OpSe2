@@ -3,16 +3,35 @@ package business;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Vector;
 
 import fabrikmethode.ConcreteCSVCreator;
 import fabrikmethode.ConcreteTxtCreator;
 import fabrikmethode.Creator;
 import fabrikmethode.Product;
 import gui.CafeVerwaltungView;
+import ownUtil.Observable;
+import ownUtil.Observer;
 
-public class CafeVerwaltungModel {
+public class CafeVerwaltungModel implements Observable {
 	public CafeVerwaltung cafeVerwaltung;
 	public CafeVerwaltungView cafeVerwaltungView;
+	
+	private static CafeVerwaltungModel cafeModel;
+	private Vector<Observer> observers = new Vector<Observer>();
+	
+	private CafeVerwaltungModel() {
+		
+	}
+	
+	public static CafeVerwaltungModel getInstance(){
+		if(cafeModel == null) {
+			cafeModel = new CafeVerwaltungModel();
+			return cafeModel;
+		}
+		return cafeModel;
+	}
+	
 
 	public void schreibeCafeVerwaltungInCsvDatei() throws Exception {
 		try {
@@ -24,6 +43,7 @@ public class CafeVerwaltungModel {
 		} catch (Exception exc) {
 			throw new Exception(exc);
 		}
+		notifyObservers();
 
 	}
 
@@ -39,15 +59,41 @@ public class CafeVerwaltungModel {
 		writer.schliessDatei();
 
 		this.cafeVerwaltung = new CafeVerwaltung(zeile[0], zeile[1], zeile[2], zeile[3].split("_"), zeile[4]);
-
+		
+		notifyObservers();
 	}
 
 	public CafeVerwaltung getCafeVerwaltung() {
 		return this.cafeVerwaltung;
+		
 	}
 
 	public void setCafeVerwaltung(CafeVerwaltung cafeVerwaltung) {
 		this.cafeVerwaltung = cafeVerwaltung;
+		notifyObservers();
+	}
+
+	@Override
+	public void addObserver(Observer obs) {
+		
+		this.observers.addElement(obs);
+		
+	}
+
+	@Override
+	public void removeObserver(Observer obs) {
+		this.observers.removeElement(obs);
+		
+	}
+
+	@Override
+	public void notifyObservers() {
+		 
+		for(int i = 0; i<this.observers.size(); i++)
+		{
+			this.observers.elementAt(i).update();
+		}
+		
 	}
 
 }
