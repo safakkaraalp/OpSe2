@@ -70,15 +70,21 @@ public class GastronomienView implements Observer {
 				zeigeCafesAn();
 			}
 		});
+		
 	}
 
 	private void zeigeCafesAn() {
-		CafeVerwaltung cafeVerwaltung = cafeVerwaltungModel.getCafeVerwaltung();
+		/**CafeVerwaltung cafeVerwaltung = cafeVerwaltungModel.getCafeVerwaltung();
 		if (cafeVerwaltung != null) {
 			txtAnzeigeCafes.setText(cafeVerwaltung.gibCafeVerwaltungZuruck(' '));
 		} else {
 			zeigeInformationsfensterAn("Bisher wurde kein Cafe aufgenommen!");
-		}
+		}*/
+		
+			if(cafeVerwaltungModel.getCafeverwaltung().size() > 0) {
+    		
+    		cafeVerwaltungModel.getCafeverwaltung().forEach(CafeVerwaltung -> txtAnzeigeCafes.appendText(CafeVerwaltung.gibCafeVerwaltungZuruck(' ')+ "\n"));
+    	}
 	}
 
 	private void zeigeInformationsfensterAn(String meldung) {

@@ -129,7 +129,7 @@ public class CafeVerwaltungView implements Observer {
     }
     
     private void initListener() {
-        // Neue funktionierende Funktionen mit Lambda-Ausdruck 
+        
         btnEingabe.setOnAction(ae->{
             nehmeCafeVerwaltungAuf();
         });
@@ -160,8 +160,10 @@ public class CafeVerwaltungView implements Observer {
                 txtKafeeProdukte.getText().split(";"),
                 txtAngeschlossenerCafe.getText()
             );
-            cafeVerwaltungModel.setCafeVerwaltung(cafeVerwaltung);
+            //cafeVerwaltungModel.setCafeVerwaltung(cafeVerwaltung);
+            cafeVerwaltungModel.addCafeVerwaltung(cafeVerwaltung);
             zeigeInformationsfensterAn("Die Produkte wurden aufgenommen!");
+            
             
         }
         catch(Exception exc) {
@@ -170,8 +172,8 @@ public class CafeVerwaltungView implements Observer {
     }
     
     public void zeigeCafeVerwaltungAn() {
-        // Über das Modell auf cafeVerwaltung zugreifen
-        CafeVerwaltung aktuelleVerwaltung = this.cafeVerwaltungModel.getCafeVerwaltung();
+        
+        /**CafeVerwaltung aktuelleVerwaltung = this.cafeVerwaltungModel.getCafeVerwaltung();
 
         if (aktuelleVerwaltung != null) {
            
@@ -180,6 +182,12 @@ public class CafeVerwaltungView implements Observer {
            
             zeigeInformationsfensterAn("Bisher wurde keine CafeVerwaltung aufgenommen.");
         }
+        */
+    	
+    	if(cafeVerwaltungModel.getCafeverwaltung().size() > 0) {
+    		
+    		cafeVerwaltungModel.getCafeverwaltung().forEach(CafeVerwaltung -> txtAnzeige.appendText(CafeVerwaltung.gibCafeVerwaltungZuruck(' ')+ "\n"));
+    	}
     }
     
     public void zeigeInformationsfensterAn(String meldung) {

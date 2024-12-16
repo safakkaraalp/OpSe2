@@ -1,5 +1,7 @@
 package business;
 
+import java.util.ArrayList;
+
 public class CafeVerwaltung {
 
 	// Name des Cafes
@@ -11,18 +13,28 @@ public class CafeVerwaltung {
 	private String beschreibung;
 
 	// Verschiedene KaffeeProdukte
-	private String[] kaffeeProdukte;
-
+	//private String[] kaffeeProdukte;
+	private ArrayList<String> kaffeeProdukteList = new ArrayList<>();
 	
 	private String angeschlossenerBaeckerei;
 
 	public CafeVerwaltung(String name, String ort, String beschreibung, String[] kaffeeProdukte,
 			String angeschlossenerBaeckerei) {
+		if(kaffeeProdukteList == null) {
+            throw new IllegalArgumentException("KaffeeProdukteList duerfen nicht null sein.");
+        }
 		this.name = name;
 		this.ort = ort;
 		this.beschreibung = beschreibung;
-		this.setKaffeeProdukte(kaffeeProdukte);
+		this.setKaffeeprodukteAusStringArray(kaffeeProdukte);
 		this.setAngeschlossenerBaeckerei(angeschlossenerBaeckerei);
+	}
+	
+	public void setKaffeeprodukteAusStringArray(String[] dienstleistung) {
+		this.kaffeeProdukteList = new ArrayList<String>();
+		for(int i = 0;i<dienstleistung.length;i++) {
+			this.kaffeeProdukteList.add(dienstleistung[i]);
+		}
 	}
 
 	public String getName() {
@@ -45,25 +57,18 @@ public class CafeVerwaltung {
 		return beschreibung;
 	}
 
-	public String[] getKaffeeProdukte() {
-		return kaffeeProdukte;
-	}
-
-	public void setKaffeeProdukte(String[] kaffeeProdukte) {
-		this.kaffeeProdukte = kaffeeProdukte;
-	}
+	
 
 	public String getKaffeeProdukteAlsString(char trenner) {
 		String ergebnis = "";
 		int i = 0;
-		for (i = 0; i < this.getKaffeeProdukte().length - 1; i++) {
-			ergebnis = ergebnis + this.getKaffeeProdukte()[i] + trenner;
+		for (i = 0; i < this.getKaffeeProdukteList().size() - 1; i++) {
+			ergebnis = ergebnis + this.getKaffeeProdukteList().get(i) + trenner;
 		}
-		return ergebnis + this.getKaffeeProdukte()[i];
+		return ergebnis + this.getKaffeeProdukteList().get(i);
 	}
 
 	public String gibCafeVerwaltungZuruck(char trenner) {
-
 		return this.getName() 
 		+ trenner + this.getOrt() 
 		+ trenner + this.getBeschreibung() + trenner
@@ -79,4 +84,14 @@ public class CafeVerwaltung {
 	public void setAngeschlossenerBaeckerei(String angeschlossenerBaeckerei) {
 		this.angeschlossenerBaeckerei = angeschlossenerBaeckerei;
 	}
+
+	public ArrayList<String> getKaffeeProdukteList() {
+		return kaffeeProdukteList;
+	}
+
+	public void setKaffeeProdukteList(ArrayList<String> kaffeeProdukteList) {
+		this.kaffeeProdukteList = kaffeeProdukteList;
+	}
+
+	
 }

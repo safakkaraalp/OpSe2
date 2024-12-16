@@ -3,6 +3,7 @@ package business;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Vector;
 
 import fabrikmethode.ConcreteCSVCreator;
@@ -16,6 +17,8 @@ import ownUtil.Observer;
 public class CafeVerwaltungModel implements Observable {
 	public CafeVerwaltung cafeVerwaltung;
 	public CafeVerwaltungView cafeVerwaltungView;
+	
+	public ArrayList<CafeVerwaltung> cafeverwaltungList = new ArrayList<>();
 	
 	private static CafeVerwaltungModel cafeModel;
 	private Vector<Observer> observers = new Vector<Observer>();
@@ -32,6 +35,11 @@ public class CafeVerwaltungModel implements Observable {
 		return cafeModel;
 	}
 	
+	
+	public void addCafeVerwaltung(CafeVerwaltung cafeverwaltung) {
+		cafeverwaltungList.add(cafeverwaltung);
+		notifyObservers();
+	}
 
 	public void schreibeCafeVerwaltungInCsvDatei() throws Exception {
 		try {
@@ -94,6 +102,10 @@ public class CafeVerwaltungModel implements Observable {
 			this.observers.elementAt(i).update();
 		}
 		
+	}
+
+	public ArrayList<CafeVerwaltung> getCafeverwaltung() {
+		return cafeverwaltungList;
 	}
 
 }
